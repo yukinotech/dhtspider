@@ -1,8 +1,11 @@
-const crypto = require('crypto')
+'use strict'
 
-let generateId = function(){
-  return crypto.createHash('sha1').update(`${(new Date).getTime()}:${Math.random()*99999}`).digest()
-}
+const spider = new (require('./index'))
 
-console.log(Buffer.concat([generateId().slice(0, 6), generateId().slice(6)]))
-Buffer.concat([generateId().slice(0, 6), generateId().slice(6)])
+// spider.on('ensureHash', (hash, addr)=> console.log(`magnet:?xt=urn:btih:${hash}`))
+
+// spider.on('unensureHash', (hash)=> console.log(hash))
+
+spider.on('nodes', (nodes)=>console.log('foundNodes'))
+
+spider.listen(6389)

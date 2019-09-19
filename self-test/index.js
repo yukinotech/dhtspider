@@ -21,9 +21,24 @@ udpServer.on('error', (err) => {
 });
 
 udpServer.on('message', (msg, rinfo) => {
-  console.log(bencode.decode(msg))
-  // console.log(`服务器接收到来自 ${rinfo.address}:${rinfo.port} 的 ${msg}`);
-  
+  let res = bencode.decode(msg)
+  if(res && res.r && res.r.nodes){
+    let data = res.r.nodes
+    const nodes = []
+		for (let i = 0; i + 26 <= data.length; i += 26) {
+			nodes.push({
+				id: data.slice(i, i + 20),
+				address: `${data[i + 20]}.${data[i + 21]}.${data[i + 22]}.${data[i + 23]}`,
+				port: data.readUInt16BE(i + 24)
+			})
+			console.log({
+				id: data.slice(i, i + 20),
+				address: `${data[i + 20]}.${data[i + 21]}.${data[i + 22]}.${data[i + 23]}`,
+				port: data.readUInt16BE(i + 24)
+			})
+		}
+		return nodes
+  }
 });
 
 udpServer.on('listening', () => {
@@ -56,10 +71,10 @@ setInterval(function(){
       let message = {
         t: 'aa',
         y: 'q',
-        q:'ping',
+        q:'find_node',
         a:{
           id:selfId,
-          // target:generateId()
+          target:generateId()
         }
       }
       send(message,address)
