@@ -15,6 +15,7 @@ fs.readFile('./test-kamigami.torrent', (err, data) => {
   var result2 = bencode.decode(data)
   let infoBuffer = bencode.encode(result2.info)
   // console.log(infoBuffer)
+  // console.log(hash.update(infoBuffer).digest())
   console.log(hash.update(infoBuffer).digest('hex'))
   console.log(result2.info)
 })
