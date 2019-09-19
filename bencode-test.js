@@ -10,7 +10,7 @@ const fs = require('fs')
 // }
 
 fs.readFile('./test-kamigami.torrent', (err, data) => {
-  var result2 = bencode.decode(data,'utf-8')
+  var result2 = bencode.decode(data)
 
   console.log(result2)
 })

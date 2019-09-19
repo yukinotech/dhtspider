@@ -8,4 +8,4 @@ spider.on('unensureHash', (hash)=> console.log(hash))
 
 spider.on('nodes', (nodes)=>console.log('foundNodes'))
 
-spider.listen(6339)
+spider.listen(6389)
